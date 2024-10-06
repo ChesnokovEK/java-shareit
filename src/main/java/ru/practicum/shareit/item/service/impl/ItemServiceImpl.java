@@ -15,6 +15,7 @@ import ru.practicum.shareit.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -35,7 +36,6 @@ public class ItemServiceImpl implements ItemService {
             throw new NotFoundException(OWNER_NOT_FOUND_MESSAGE + userId);
         }
         Item item = ItemMapper.toItem(itemDto, userId);
-        item.setOwner(userId);
         return ItemMapper.toItemDto(itemDao.add(item));
     }
 
@@ -74,7 +74,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> findItemsByUserRequest(String text) {
-        if (!StringUtils.hasLength(text)) {
+        if (!StringUtils.hasText(text)) {
             return new ArrayList<>();
         }
         return itemDao.findItemsByUserRequest(text)
@@ -84,11 +84,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private boolean checkOwner(Long ownerId) {
-        List<User> users = userDao.findAll();
-        List<User> result = users
-                .stream()
-                .filter(user -> user.getId().equals(ownerId))
-                .toList();
-        return !result.isEmpty();
+        Optional<User> user = userDao.findById(ownerId);
+        return user.isPresent();
     }
 }

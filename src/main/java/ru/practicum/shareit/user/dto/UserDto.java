@@ -1,5 +1,6 @@
 package ru.practicum.shareit.user.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,7 @@ import jakarta.validation.constraints.Email;
 @AllArgsConstructor
 public class UserDto {
     private Long id;
-    @NotNull(groups = {Create.class})
+    @NotBlank(groups = {Create.class})
     private String name;
     @Email(groups = {Create.class, Update.class})
     @NotNull(groups = {Create.class})

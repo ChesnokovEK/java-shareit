@@ -1,6 +1,6 @@
 package ru.practicum.shareit.user.service.impl;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.NotFoundException;
@@ -15,21 +15,24 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao;
+    private final UserDao userDao;
 
+    @Override
     public UserDto add(UserDto userDto) {
         User user = UserMapper.toUser(userDto, userDto.getId());
         return UserMapper.toUserDto(userDao.add(user));
     }
 
+    @Override
     public UserDto update(Long id, UserDto userDto) {
         User user = UserMapper.toUser(userDto, id);
         return UserMapper.toUserDto(userDao.update(id, user));
     }
 
+    @Override
     public UserDto findById(Long id) {
         User user = userDao.findById(id)
                 .orElseThrow(() -> {
@@ -40,10 +43,12 @@ public class UserServiceImpl implements UserService {
         return UserMapper.toUserDto(user);
     }
 
+    @Override
     public void delete(Long id) {
         userDao.delete(id);
     }
 
+    @Override
     public List<UserDto> findAll() {
         return userDao.findAll()
                 .stream()

@@ -77,12 +77,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     private void updateEmail(String oldEmail, String newEmail) {
-        emails.remove(oldEmail);
         if (emails.contains(newEmail)) {
-            emails.add(oldEmail);
             log.warn("email-\"{}\" уже используется другим пользователем: ", newEmail);
             throw new EmailConflictException(EMAIL_CONFLICT_MESSAGE + newEmail);
         }
+        emails.remove(oldEmail);
         emails.add(newEmail);
     }
 
