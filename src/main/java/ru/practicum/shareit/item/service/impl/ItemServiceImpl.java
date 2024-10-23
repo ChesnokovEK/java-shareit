@@ -75,7 +75,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public ItemDTO findItemById(Long itemId, Long userId) {
-        checkUser(userId);
         Item item = checkItem(itemId);
 
         List<CommentDTO> comments = CommentMapper.toDTOList(commentRepository.findAllByItemOrderByIdAsc(item));
