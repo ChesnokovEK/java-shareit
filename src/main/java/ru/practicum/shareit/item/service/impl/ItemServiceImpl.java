@@ -34,7 +34,7 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 @Service
 @AllArgsConstructor
-
+@Transactional
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
@@ -43,7 +43,6 @@ public class ItemServiceImpl implements ItemService {
     private final CommentRepository commentRepository;
 
     @Override
-    @Transactional
     public ItemDTO createItem(ItemDTO itemDTO, Long userId) {
         User owner = checkUser(userId);
         Item item = ItemMapper.toItem(itemDTO, owner);
@@ -52,7 +51,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    @Transactional
     public ItemDTO updateItem(ItemDTO itemDTO, Long itemId, Long userId) {
         User owner = checkUser(userId);
         Item item = checkItem(itemId);
@@ -73,7 +71,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    @Transactional
     public ItemDTO findItemById(Long itemId, Long userId) {
         Item item = checkItem(itemId);
 
@@ -99,7 +96,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    @Transactional
     public List<ItemDTO> findAllItemsByUserId(Long userId) {
         checkUser(userId);
         List<Item> userItems = itemRepository.findAllByOwnerId(userId);
@@ -125,7 +121,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    @Transactional
     public List<ItemDTO> findItemsByRequest(String text, Long userId) {
         checkUser(userId);
         if (!StringUtils.hasText(text)) {
@@ -159,7 +154,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    @Transactional
     public CommentDTO addComment(CommentDTO commentDTO, Long itemId, Long userId) {
         Item item = checkItem(itemId);
         User author = checkUser(userId);
@@ -174,7 +168,6 @@ public class ItemServiceImpl implements ItemService {
             throw new ValidateCommentException(String.format("Нельзя оставить комментарий на предмет с Id: %d", itemId));
         }
         Comment comment = CommentMapper.toComment(commentDTO, item, author);
-        comment.setCreated(LocalDateTime.now());
         comment = commentRepository.save(comment);
         return CommentMapper.toCommentDTO(comment);
     }

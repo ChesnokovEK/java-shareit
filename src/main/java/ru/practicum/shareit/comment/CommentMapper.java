@@ -12,7 +12,7 @@ import static java.util.stream.Collectors.toList;
 
 @UtilityClass
 public class CommentMapper {
-    public static Comment toComment(CommentDTO commentDTO, Item item, User author) {
+    public Comment toComment(CommentDTO commentDTO, Item item, User author) {
         return Comment.builder()
                 .id(commentDTO.getId())
                 .text(commentDTO.getText())
@@ -22,7 +22,7 @@ public class CommentMapper {
                 .build();
     }
 
-    public static CommentDTO toCommentDTO(Comment comment) {
+    public CommentDTO toCommentDTO(Comment comment) {
         return CommentDTO.builder()
                 .id(comment.getId())
                 .text(comment.getText())
@@ -32,7 +32,7 @@ public class CommentMapper {
                 .build();
     }
 
-    public static List<CommentDTO> toDTOList(List<Comment> comments) {
+    public List<CommentDTO> toDTOList(List<Comment> comments) {
         return comments
                 .stream()
                 .map(CommentMapper::toCommentDTO)

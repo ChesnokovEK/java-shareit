@@ -11,7 +11,7 @@ import java.util.List;
 
 @UtilityClass
 public class ItemMapper {
-    public static ItemDTO toItemDTO(Item item, List<CommentDTO> comments) {
+    public ItemDTO toItemDTO(Item item, List<CommentDTO> comments) {
         return ItemDTO.builder()
                 .id(item.getId())
                 .name(item.getName())
@@ -21,7 +21,7 @@ public class ItemMapper {
                 .build();
     }
 
-    public static ItemDTO toItemDTO(Item item, BookingDTO lastBooking, BookingDTO nextBooking, List<CommentDTO> comments) {
+    public ItemDTO toItemDTO(Item item, BookingDTO lastBooking, BookingDTO nextBooking, List<CommentDTO> comments) {
         return ItemDTO.builder()
                 .id(item.getId())
                 .name(item.getName())
@@ -33,7 +33,7 @@ public class ItemMapper {
                 .build();
     }
 
-    public static Item toItem(ItemDTO itemDTO, User owner) {
+    public Item toItem(ItemDTO itemDTO, User owner) {
         return Item.builder()
                 .id(itemDTO.getId())
                 .name(itemDTO.getName())
@@ -43,7 +43,7 @@ public class ItemMapper {
                 .build();
     }
 
-    public static ItemDTO toItemDTO(Item item) {
+    public ItemDTO toItemDTO(Item item) {
         return ItemDTO.builder()
                 .id(item.getId())
                 .name(item.getName())

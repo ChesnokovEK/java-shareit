@@ -31,6 +31,7 @@ import static ru.practicum.shareit.booking.BookingStatus.WAITING;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class BookingServiceImpl implements BookingService {
 
     private final UserRepository userRepository;
@@ -38,7 +39,6 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
 
     @Override
-    @Transactional
     public BookingResponseDTO createBooking(BookingDTO bookingDto, Long userId) {
         User user = checkUser(userId);
         Item item = checkItem(bookingDto.getItemId());
@@ -59,7 +59,7 @@ public class BookingServiceImpl implements BookingService {
             throw new NotFoundException("Нельзя забронировать свой же предмет");
         }
 
-        if (Boolean.FALSE.equals(item.getAvailable())) {
+        if (!item.getAvailable()) {
             log.warn("Бронирование не возможно");
             throw new ValidateBookingException(
                     String.format("В данный момент невозможно забронировать предмет: %d",
@@ -72,7 +72,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    @Transactional
     public BookingResponseDTO updateBooking(Long bookingId, Boolean approved, Long userId) {
         Booking booking = checkBooking(bookingId);
         Item item = checkItem(booking.getItem().getId());
@@ -99,7 +98,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    @Transactional
     public BookingResponseDTO findBookingById(Long bookingId, Long userId) {
         checkUser(userId);
         Booking booking = checkBooking(bookingId);
@@ -118,7 +116,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    @Transactional
     public List<BookingResponseDTO> findBookingsByUser(String stateValue, Long userId) {
         User owner = checkUser(userId);
         List<Booking> ownerBookings = bookingRepository.findByBooker(owner);
@@ -127,7 +124,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    @Transactional
     public List<BookingResponseDTO> findBookingsByItemsOwner(String stateValue, Long userId) {
         User owner = checkUser(userId);
         List<Booking> ownerBookings = bookingRepository.findByItemOwner(owner);

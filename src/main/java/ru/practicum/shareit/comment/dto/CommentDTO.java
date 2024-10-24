@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import ru.practicum.shareit.exception.markers.Create;
 
 import jakarta.validation.constraints.NotBlank;
@@ -18,6 +19,7 @@ public class CommentDTO {
     @NotBlank(groups = Create.class)
     private String text;
     private String authorName;
+    @CreationTimestamp
     private LocalDateTime created;
     private Long itemId;
 }

@@ -43,9 +43,9 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
         return new ErrorResponse("Отказано в доступе", e.getMessage());
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleThrowable(Exception e) {
+    public ErrorResponse handleThrowable(Throwable e) {
         log.debug("Непредвиденная ошибка {}", e.getMessage());
         return new ErrorResponse("Непредвиденная ошибка {}", e.getMessage());
     }

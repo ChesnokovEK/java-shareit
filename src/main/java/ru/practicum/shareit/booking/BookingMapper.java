@@ -11,7 +11,7 @@ import ru.practicum.shareit.user.UserMapper;
 @UtilityClass
 public class BookingMapper {
 
-    public static BookingResponseDTO toBookingResponseDTO(Booking booking) {
+    public BookingResponseDTO toBookingResponseDTO(Booking booking) {
         return BookingResponseDTO.builder()
                 .id(booking.getId())
                 .start(booking.getStart())
@@ -22,7 +22,7 @@ public class BookingMapper {
                 .build();
     }
 
-    public static Booking toBooking(BookingDTO bookingDTO, Item item, User booker) {
+    public Booking toBooking(BookingDTO bookingDTO, Item item, User booker) {
         return Booking.builder()
                 .id(bookingDTO.getId())
                 .start(bookingDTO.getStart())
