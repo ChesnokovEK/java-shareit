@@ -10,7 +10,6 @@ import ru.practicum.shareit.item.ItemClient;
 import ru.practicum.shareit.item.dto.CommentDTO;
 import ru.practicum.shareit.item.dto.ItemDTO;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.util.Collections;
@@ -70,7 +69,7 @@ public class ItemController {
     @PostMapping("/{itemId}/comment")
     public ResponseEntity<Object> addComment(@RequestHeader(USER_ID_HEADER) Long userId,
                                              @PathVariable("itemId") @Positive Long itemId,
-                                             @Valid @RequestBody CommentDTO comment) {
+                                             @Validated @RequestBody CommentDTO comment) {
         log.info("Получен запрос к эндпоинту /items{itemId}/comment addComment с headers {}, с itemId {}", userId, itemId);
         return itemClient.addComment(itemId, userId, comment);
     }
