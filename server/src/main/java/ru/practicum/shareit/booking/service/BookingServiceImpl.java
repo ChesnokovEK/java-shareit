@@ -30,6 +30,7 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class BookingServiceImpl implements BookingService {
 
     private final UserRepository userRepository;
@@ -37,7 +38,6 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
 
     @Override
-    @Transactional
     public BookingResponseDTO createBooking(BookingDTO bookingDTO, Long userId) {
         User user = checkUser(userId);
         Item item = checkItem(bookingDTO.getItemId());
@@ -71,7 +71,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    @Transactional
     public BookingResponseDTO updateBooking(Long bookingId, Boolean approved, Long userId) {
         Booking booking = checkBooking(bookingId);
         Item item = checkItem(booking.getItem().getId());
@@ -98,7 +97,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    @Transactional
     public BookingResponseDTO findBookingById(Long bookingId, Long userId) {
         checkUser(userId);
         Booking booking = checkBooking(bookingId);
@@ -117,7 +115,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    @Transactional
     public List<BookingResponseDTO> findBookingsByUser(String stateValue, Long userId, int from, int size) {
         User owner = checkUser(userId);
         PageRequest pageRequest = PageRequest.of(from / size, size, Sort.by("start").descending());
@@ -130,7 +127,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    @Transactional
     public List<BookingResponseDTO> findBookingsByItemsOwner(String stateValue, Long userId, int from, int size) {
         User owner = checkUser(userId);
         PageRequest pageRequest = PageRequest.of(from / size, size, Sort.by("start").descending());

@@ -2,7 +2,7 @@ package ru.practicum.shareit.user.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import ru.practicum.shareit.user.dto.UserDTO;
 @RequestMapping(path = "/users")
 @Validated
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserClient userClient;
@@ -46,10 +46,10 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public HttpStatus deleteUserById(@PathVariable("id") @Positive Long userId) {
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteUserById(@PathVariable("id") @Positive Long userId) {
         log.info("Получен запрос к эндпоинту: /users delete с id={}", userId);
         userClient.deleteUserById(userId);
-        return HttpStatus.OK;
     }
 
 }

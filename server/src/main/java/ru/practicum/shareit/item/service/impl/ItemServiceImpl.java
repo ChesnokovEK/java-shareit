@@ -171,7 +171,6 @@ public class ItemServiceImpl implements ItemService {
             throw new ValidateCommentException(String.format("Нельзя оставить комментарий на предмет с Id: %d", itemId));
         }
         Comment comment = CommentMapper.toComment(commentDTO, item, author);
-        comment.setCreated(LocalDateTime.now());
         comment = commentRepository.save(comment);
         return CommentMapper.toCommentDTO(comment);
     }

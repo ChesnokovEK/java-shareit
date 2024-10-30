@@ -3,7 +3,6 @@ package ru.practicum.shareit.item.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.comment.dto.CommentDTO;
 import ru.practicum.shareit.item.dto.ItemDTO;
@@ -24,7 +23,7 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping
-    public ItemDTO createItem(@RequestBody @Validated ItemDTO itemDto,
+    public ItemDTO createItem(@RequestBody @Valid ItemDTO itemDto,
                               @RequestHeader(USER_ID_HEADER) Long userId) {
         log.info("POST Запрос на добавление пользователем с id-{} предмета {}", userId, itemDto);
         return itemService.createItem(itemDto, userId);
